@@ -136,11 +136,12 @@ build_variant() {
   #   * TOML (gemini, qwen): {{args}}
   # This keeps formats readable without extra abstraction.
 
-   case $agent in
-     bob-ide)
-       mkdir -p "$base_dir/.github/prompts"
-       generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
-   esac
+    case $agent in
+      bob-ide)
+        mkdir -p "$base_dir/.bob/commands"
+        mkdir -p "$base_dir/.bob/rules"
+        generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.bob/commands" "$script" ;;
+    esac
   ( cd "$base_dir" && zip -r "../spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip" . )
   echo "Created $GENRELEASES_DIR/spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip"
 }

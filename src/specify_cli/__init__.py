@@ -958,7 +958,7 @@ def init(
     
     # Agent folder security notice
     agent_folder_map = {
-        "bob-ide": ".github/",
+        "bob-ide": ".bob/",
     }
     
     if selected_ai in agent_folder_map:

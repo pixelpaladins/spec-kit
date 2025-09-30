@@ -31,7 +31,7 @@ Specify supports multiple AI agents by generating agent-specific command files a
 
 | Agent | Directory | Format | CLI Tool | Description |
 |-------|-----------|---------|----------|-------------|
-| **Bob-IDE** | `.github/prompts/` | Markdown | N/A (IDE-based) | Bob-IDE in VS Code |
+| **Bob-IDE** | `.bob/commands/` | Markdown | N/A (IDE-based) | Bob-IDE in VS Code |
 
 
 ### Step-by-Step Integration Guide
@@ -52,7 +52,7 @@ Also update the `agent_folder_map` in the same file to include the new agent's f
 
 ```python
 agent_folder_map = {
-    "bob-ide": ".github/",
+    "bob-ide": ".bob/",
 }
 ```
 
@@ -86,8 +86,9 @@ ALL_AGENTS=(bob-ide)
 ```bash
 case $agent in
   bob-ide)
-    mkdir -p "$base_dir/.github/prompts"
-    generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
+    mkdir -p "$base_dir/.bob/commands"
+    mkdir -p "$base_dir/.bob/rules"
+    generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.bob/commands" "$script" ;;
 esac
 ```
 
@@ -178,7 +179,7 @@ Command content with {SCRIPT} and {{args}} placeholders.
 ## Directory Conventions
 
 - **IDE agents**: Follow IDE-specific patterns:
-  - Bob-IDE: `.github/prompts/`
+  - Bob-IDE: `.bob/commands/`
 
 ## Argument Patterns
 

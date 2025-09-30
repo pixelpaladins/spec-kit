@@ -61,7 +61,7 @@ AGENT_TYPE="${1:-}"
 # Agent-specific file paths  
 CLAUDE_FILE="$REPO_ROOT/CLAUDE.md"
 GEMINI_FILE="$REPO_ROOT/GEMINI.md"
-COPILOT_FILE="$REPO_ROOT/.github/copilot-instructions.md"
+COPILOT_FILE="$REPO_ROOT/.bob/commands/copilot-instructions.md"
 CURSOR_FILE="$REPO_ROOT/.cursor/rules/specify-rules.mdc"
 QWEN_FILE="$REPO_ROOT/QWEN.md"
 AGENTS_FILE="$REPO_ROOT/AGENTS.md"
@@ -546,28 +546,25 @@ update_agent_file() {
 update_specific_agent() {
     local agent_type="$1"
     
-    case "$agent_type" in
+     case "$agent_type" in
          bob-ide)
              update_agent_file "$COPILOT_FILE" "Bob-IDE"
              ;;
-        gemini)
-            update_agent_file "$GEMINI_FILE" "Gemini CLI"
-            ;;
-         bob-ide)
-             update_agent_file "$COPILOT_FILE" "Bob-IDE"
+         gemini)
+             update_agent_file "$GEMINI_FILE" "Gemini CLI"
              ;;
          cursor)
-            update_agent_file "$CURSOR_FILE" "Cursor IDE"
-            ;;
-        qwen)
-            update_agent_file "$QWEN_FILE" "Qwen Code"
-            ;;
-        opencode)
-            update_agent_file "$AGENTS_FILE" "opencode"
-            ;;
-        codex)
-            update_agent_file "$AGENTS_FILE" "Codex CLI"
-            ;;
+             update_agent_file "$CURSOR_FILE" "Cursor IDE"
+             ;;
+         qwen)
+             update_agent_file "$QWEN_FILE" "Qwen Code"
+             ;;
+         opencode)
+             update_agent_file "$AGENTS_FILE" "opencode"
+             ;;
+         codex)
+             update_agent_file "$AGENTS_FILE" "Codex CLI"
+             ;;
 
         kilocode)
             update_agent_file "$KILOCODE_FILE" "Kilo Code"
@@ -591,17 +588,12 @@ update_all_existing_agents() {
     
     # Check each possible agent file and update if it exists
     if [[ -f "$COPILOT_FILE" ]]; then
-        update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+        update_agent_file "$COPILOT_FILE" "Bob-IDE"
         found_agent=true
     fi
     
     if [[ -f "$GEMINI_FILE" ]]; then
         update_agent_file "$GEMINI_FILE" "Gemini CLI"
-        found_agent=true
-    fi
-    
-    if [[ -f "$COPILOT_FILE" ]]; then
-        update_agent_file "$COPILOT_FILE" "Bob-IDE"
         found_agent=true
     fi
 

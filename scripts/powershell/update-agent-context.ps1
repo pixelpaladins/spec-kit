@@ -46,7 +46,7 @@ $NEW_PLAN = $IMPL_PLAN
 # Agent file paths
 $CLAUDE_FILE   = Join-Path $REPO_ROOT 'CLAUDE.md'
 $GEMINI_FILE   = Join-Path $REPO_ROOT 'GEMINI.md'
-$COPILOT_FILE  = Join-Path $REPO_ROOT '.github/copilot-instructions.md'
+$COPILOT_FILE  = Join-Path $REPO_ROOT '.bob/commands/copilot-instructions.md'
 $CURSOR_FILE   = Join-Path $REPO_ROOT '.cursor/rules/specify-rules.mdc'
 $QWEN_FILE     = Join-Path $REPO_ROOT 'QWEN.md'
 $AGENTS_FILE   = Join-Path $REPO_ROOT 'AGENTS.md'
@@ -366,7 +366,7 @@ function Update-SpecificAgent {
     )
     switch ($Type) {
         'bob-ide'  { Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'Bob-IDE' }
-        default { Write-Err "Unknown agent type '$Type'"; Write-Err 'Expected: copilot'; return $false }
+        default { Write-Err "Unknown agent type '$Type'"; Write-Err 'Expected: bob-ide'; return $false }
     }
 }
 
