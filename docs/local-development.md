@@ -75,7 +75,7 @@ uvx --from /mnt/c/GitHub/BobKit bobkit init demo-anywhere --ai copilot --ignore-
 Set an environment variable for convenience:
 ```bash
 export BOBKIT_SRC=/mnt/c/GitHub/BobKit
-uvx --from "$SPEC_KIT_SRC" bobkit init demo-env --ai copilot --ignore-agent-tools --script ps
+uvx --from "$BOBKIT_SRC" bobkit init demo-env --ai copilot --ignore-agent-tools --script ps
 ```
 
 (Optional) Define a shell function:
