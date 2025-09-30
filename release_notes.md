@@ -1,13 +1,2 @@
-# Spec Kit v0.1.0
+This is the latest set of releases that you can use with your agent of choice. We recommend using the Specify CLI to scaffold your projects, however you can download these independently and manage them yourself.
 
-## Changes
-
-- Swapped GitHub Copilot for Bob-IDE as the supported AI assistant
-- Updated all references and documentation to use Bob-IDE
-- Ensured all workflows and functionality remain intact
-
-## Features
-
-- Full support for Bob-IDE integration
-- Template packages for both POSIX Shell and PowerShell
-- Comprehensive documentation and examples
