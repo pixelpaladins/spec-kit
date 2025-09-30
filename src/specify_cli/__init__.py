@@ -76,12 +76,12 @@ CLAUDE_LOCAL_PATH = Path.home() / ".claude" / "local" / "claude"
 
 # ASCII Art Banner
 BANNER = """
-███████╗██████╗ ███████╗ ██████╗██╗███████╗██╗   ██╗
-██╔════╝██╔══██╗██╔════╝██╔════╝██║██╔════╝╚██╗ ██╔╝
-███████╗██████╔╝█████╗  ██║     ██║█████╗   ╚████╔╝ 
-╚════██║██╔═══╝ ██╔══╝  ██║     ██║██╔══╝    ╚██╔╝  
-███████║██║     ███████╗╚██████╗██║██║        ██║   
-╚══════╝╚═╝     ╚══════╝ ╚═════╝╚═╝╚═╝        ╚═╝   
+██████╗  ██████╗  ██╗   ██╗██████╗ ██╗  ██╗██╗██╗   ██╗
+██╔══██╗██╔═══██╗██║   ██║██╔══██╗██║ ██╔╝██║╚██╗ ██╔╝
+██████╔╝██║   ██║██║   ██║██████╔╝█████╔╝ ██║ ╚████╔╝ 
+██╔══██╗██║   ██║██║   ██║██╔══██╗██╔═██╗  ██║  ╚██╔╝  
+██████╔╝╚██████╔╝╚██████╔╝██║  ██║██║  ██╗██║   ██║   
+╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝   ╚═╝   
 """
 
 TAGLINE = "GitHub BobKit - Spec-Driven Development Toolkit"
@@ -174,9 +174,12 @@ class StepTracker:
 
 
 MINI_BANNER = """
-╔═╗╔═╗╔═╗╔═╗╦╔═╗╦ ╦
-╚═╗╠═╝║╣ ║  ║╠╣ ╚╦╝
-╚═╝╩  ╚═╝╚═╝╩╚   ╩ 
+╔══╗╔══╗╔══╗╔══╗╔╗╔══╗╔╗ ╔╗
+╚══╗╚══╗╚══╗╚══╗╔╝╚══╗╔╝ ╚╝
+╔══╝╔══╝╔══╝╔══╝╚╗╔══╝╚╗ ╔╗
+╚══╗╚══╗╚══╗╚══╗╔╝╚══╗╔╝ ╚╝
+╔══╝╔══╝╔══╝╔══╝╚╗╔══╝╚╗ ╔╗
+╚══╝╚══╝╚══╝╚══╝ ╚╝╚══╝ ╚╝╚╝
 """
 
 def get_key():
@@ -425,7 +428,7 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> bool:
 
 def download_template_from_github(ai_assistant: str, download_dir: Path, *, script_type: str = "sh", verbose: bool = True, show_progress: bool = True, client: httpx.Client = None, debug: bool = False, github_token: str = None) -> Tuple[Path, dict]:
     repo_owner = "pixelpaladins"
-    repo_name = "BobKit"
+    repo_name = "spec-kit"
     if client is None:
         client = httpx.Client(verify=ssl_context)
     
