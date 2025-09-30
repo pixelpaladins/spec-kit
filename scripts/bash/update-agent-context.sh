@@ -547,9 +547,9 @@ update_specific_agent() {
     local agent_type="$1"
     
     case "$agent_type" in
-        claude)
-            update_agent_file "$CLAUDE_FILE" "Claude Code"
-            ;;
+         copilot)
+             update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+             ;;
         gemini)
             update_agent_file "$GEMINI_FILE" "Gemini CLI"
             ;;
@@ -590,8 +590,8 @@ update_all_existing_agents() {
     local found_agent=false
     
     # Check each possible agent file and update if it exists
-    if [[ -f "$CLAUDE_FILE" ]]; then
-        update_agent_file "$CLAUDE_FILE" "Claude Code"
+    if [[ -f "$COPILOT_FILE" ]]; then
+        update_agent_file "$COPILOT_FILE" "GitHub Copilot"
         found_agent=true
     fi
     

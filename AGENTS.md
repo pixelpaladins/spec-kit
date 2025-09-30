@@ -31,17 +31,12 @@ Specify supports multiple AI agents by generating agent-specific command files a
 
 | Agent | Directory | Format | CLI Tool | Description |
 |-------|-----------|---------|----------|-------------|
-| **Claude Code** | `.claude/commands/` | Markdown | `claude` | Anthropic's Claude Code CLI |
-| **Gemini CLI** | `.gemini/commands/` | TOML | `gemini` | Google's Gemini CLI |
 | **GitHub Copilot** | `.github/prompts/` | Markdown | N/A (IDE-based) | GitHub Copilot in VS Code |
-| **Cursor** | `.cursor/commands/` | Markdown | `cursor-agent` | Cursor CLI |
-| **Qwen Code** | `.qwen/commands/` | TOML | `qwen` | Alibaba's Qwen Code CLI |
-| **opencode** | `.opencode/command/` | Markdown | `opencode` | opencode CLI |
 
 
 ### Step-by-Step Integration Guide
 
-Follow these steps to add a new agent (using Cursor as an example):
+Follow these steps to add a new agent (using GitHub Copilot as an example):
 
 #### 1. Update AI_CHOICES Constant
 
@@ -50,12 +45,6 @@ Add the new agent to the `AI_CHOICES` dictionary in `src/specify_cli/__init__.py
 ```python
 AI_CHOICES = {
     "copilot": "GitHub Copilot",
-    "claude": "Claude Code", 
-    "gemini": "Gemini CLI",
-    "cursor": "Cursor",
-    "qwen": "Qwen Code",
-    "opencode": "opencode",
-
 }
 ```
 
@@ -63,16 +52,7 @@ Also update the `agent_folder_map` in the same file to include the new agent's f
 
 ```python
 agent_folder_map = {
-    "claude": ".claude/",
-    "gemini": ".gemini/",
-    "cursor": ".cursor/",
-    "qwen": ".qwen/",
-    "opencode": ".opencode/",
-    "codex": ".codex/",
-
-    "kilocode": ".kilocode/",
-    "auggie": ".auggie/",
-    "copilot": ".github/"
+    "copilot": ".github/",
 }
 ```
 
@@ -99,14 +79,15 @@ Modify `.github/workflows/scripts/create-release-packages.sh`:
 
 ##### Add to ALL_AGENTS array:
 ```bash
-ALL_AGENTS=(claude gemini copilot cursor qwen opencode)
+ALL_AGENTS=(copilot)
 ```
 
 ##### Add case statement for directory structure:
 ```bash
 case $agent in
-  # ... existing cases ...
-
+  copilot)
+    mkdir -p "$base_dir/.github/prompts"
+    generate_commands copilot prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
 esac
 ```
 
@@ -116,29 +97,22 @@ Modify `.github/workflows/scripts/create-github-release.sh` to include the new a
 
 ```bash
 gh release create "$VERSION" \
-  # ... existing packages ...
-
-  # Add new agent packages here
+  .genreleases/spec-kit-template-copilot-sh-"$VERSION".zip \
+  .genreleases/spec-kit-template-copilot-ps-"$VERSION".zip \
 ```
 
 #### 5. Update Agent Context Scripts
 
 ##### Bash script (`scripts/bash/update-agent-context.sh`):
 
-Add file variable:
-```bash
-WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/specify-rules.md"
-```
-
 Add to case statement:
 ```bash
 case "$AGENT_TYPE" in
-  # ... existing cases ...
-
+  copilot) update_agent_file "$COPILOT_FILE" "GitHub Copilot" ;;
   "") 
-    # ... existing checks ...
-
-    # Update default creation condition
+    if [[ -f "$COPILOT_FILE" ]]; then
+      update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+    fi
     ;;
 esac
 ```
@@ -153,16 +127,9 @@ $windsurfFile = Join-Path $repoRoot '.windsurf/rules/specify-rules.md'
 Add to switch statement:
 ```powershell
 switch ($AgentType) {
-    # ... existing cases ...
-
+    'copilot' { Update-AgentFile $copilotFile 'GitHub Copilot' }
     '' {
-        foreach ($pair in @(
-            # ... existing pairs ...
-
-        )) {
-            if (Test-Path $pair.file) { Update-AgentFile $pair.file $pair.name }
-        }
-        # Update default creation condition
+        if (Test-Path $copilotFile) { Update-AgentFile $copilotFile 'GitHub Copilot' }
     }
 }
 ```
@@ -180,18 +147,9 @@ For agents that require CLI tools, add checks in the `check()` command and agent
 
 ## Agent Categories
 
-### CLI-Based Agents
-Require a command-line tool to be installed:
-- **Claude Code**: `claude` CLI
-- **Gemini CLI**: `gemini` CLI  
-- **Cursor**: `cursor-agent` CLI
-- **Qwen Code**: `qwen` CLI
-- **opencode**: `opencode` CLI
-
 ### IDE-Based Agents
 Work within integrated development environments:
 - **GitHub Copilot**: Built into VS Code/compatible editors
-- **Windsurf**: Built into Windsurf IDE
 
 ## Command File Formats
 
@@ -207,7 +165,7 @@ Command content with {SCRIPT} and $ARGUMENTS placeholders.
 ```
 
 ### TOML Format
-Used by: Gemini, Qwen
+Used by: (No longer used in current agents)
 
 ```toml
 description = "Command description"
@@ -219,11 +177,8 @@ Command content with {SCRIPT} and {{args}} placeholders.
 
 ## Directory Conventions
 
-- **CLI agents**: Usually `.<agent-name>/commands/`
 - **IDE agents**: Follow IDE-specific patterns:
   - Copilot: `.github/prompts/`
-  - Cursor: `.cursor/commands/`
-  - Windsurf: `.windsurf/workflows/`
 
 ## Argument Patterns
 
