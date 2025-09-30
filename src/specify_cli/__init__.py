@@ -66,17 +66,7 @@ def _github_auth_headers(cli_token: str | None = None) -> dict:
 
 # Constants
 AI_CHOICES = {
-    "copilot": "GitHub Copilot",
-    "claude": "Claude Code",
-    "gemini": "Gemini CLI",
-    "cursor": "Cursor",
-    "qwen": "Qwen Code",
-    "opencode": "opencode",
-    "codex": "Codex CLI",
-    "windsurf": "Windsurf",
-    "kilocode": "Kilo Code",
-    "auggie": "Auggie CLI",
-    "roo": "Roo Code",
+    "bob-ide": "Bob-IDE",
 }
 # Add script type choices
 SCRIPT_TYPE_CHOICES = {"sh": "POSIX Shell (bash/zsh)", "ps": "PowerShell"}
@@ -374,7 +364,7 @@ def check_tool(tool: str, install_hint: str) -> bool:
     """Check if a tool is installed."""
     
     # Special handling for Claude CLI after `claude migrate-installer`
-    # See: https://github.com/github/spec-kit/issues/123
+    # See: https://github.com/pixelpaladins/spec-kit/issues/123
     # The migrate-installer command REMOVES the original executable from PATH
     # and creates an alias at ~/.claude/local/claude instead
     # This path should be prioritized over other claude executables in PATH
@@ -434,7 +424,7 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> bool:
 
 
 def download_template_from_github(ai_assistant: str, download_dir: Path, *, script_type: str = "sh", verbose: bool = True, show_progress: bool = True, client: httpx.Client = None, debug: bool = False, github_token: str = None) -> Tuple[Path, dict]:
-    repo_owner = "github"
+    repo_owner = "pixelpaladins"
     repo_name = "spec-kit"
     if client is None:
         client = httpx.Client(verify=ssl_context)
@@ -750,7 +740,7 @@ def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = 
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor, qwen, opencode, codex, windsurf, kilocode, or auggie"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: bob-ide"),
     script_type: str = typer.Option(None, "--script", help="Script type to use: sh or ps"),
     ignore_agent_tools: bool = typer.Option(False, "--ignore-agent-tools", help="Skip checks for AI agent tools like Claude Code"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
@@ -762,31 +752,21 @@ def init(
 ):
     """
     Initialize a new Specify project from the latest template.
-    
+
     This command will:
     1. Check that required tools are installed (git is optional)
-    2. Let you choose your AI assistant (Claude Code, Gemini CLI, GitHub Copilot, Cursor, Qwen Code, opencode, Codex CLI, Windsurf, Kilo Code, or Auggie CLI)
+    2. Let you choose your AI assistant (Bob-IDE)
     3. Download the appropriate template from GitHub
     4. Extract the template to a new project directory or current directory
     5. Initialize a fresh git repository (if not --no-git and no existing repo)
     6. Optionally set up AI assistant commands
-    
+
     Examples:
         specify init my-project
-        specify init my-project --ai claude
-        specify init my-project --ai gemini
-        specify init my-project --ai copilot --no-git
-        specify init my-project --ai cursor
-        specify init my-project --ai qwen
-        specify init my-project --ai opencode
-        specify init my-project --ai codex
-        specify init my-project --ai windsurf
-        specify init my-project --ai auggie
-        specify init --ignore-agent-tools my-project
-        specify init . --ai claude         # Initialize in current directory
+        specify init my-project --ai bob-ide --no-git
+        specify init . --ai bob-ide         # Initialize in current directory
         specify init .                     # Initialize in current directory (interactive AI selection)
-        specify init --here --ai claude    # Alternative syntax for current directory
-        specify init --here --ai codex
+        specify init --here --ai bob-ide    # Alternative syntax for current directory
         specify init --here
         specify init --here --force  # Skip confirmation when current directory not empty
     """
@@ -875,52 +855,10 @@ def init(
         selected_ai = select_with_arrows(
             AI_CHOICES, 
             "Choose your AI assistant:", 
-            "copilot"
+            "bob-ide"
         )
     
-    # Check agent tools unless ignored
-    if not ignore_agent_tools:
-        agent_tool_missing = False
-        install_url = ""
-        if selected_ai == "claude":
-            if not check_tool("claude", "https://docs.anthropic.com/en/docs/claude-code/setup"):
-                install_url = "https://docs.anthropic.com/en/docs/claude-code/setup"
-                agent_tool_missing = True
-        elif selected_ai == "gemini":
-            if not check_tool("gemini", "https://github.com/google-gemini/gemini-cli"):
-                install_url = "https://github.com/google-gemini/gemini-cli"
-                agent_tool_missing = True
-        elif selected_ai == "qwen":
-            if not check_tool("qwen", "https://github.com/QwenLM/qwen-code"):
-                install_url = "https://github.com/QwenLM/qwen-code"
-                agent_tool_missing = True
-        elif selected_ai == "opencode":
-            if not check_tool("opencode", "https://opencode.ai"):
-                install_url = "https://opencode.ai"
-                agent_tool_missing = True
-        elif selected_ai == "codex":
-            if not check_tool("codex", "https://github.com/openai/codex"):
-                install_url = "https://github.com/openai/codex"
-                agent_tool_missing = True
-        elif selected_ai == "auggie":
-            if not check_tool("auggie", "https://docs.augmentcode.com/cli/setup-auggie/install-auggie-cli"):
-                install_url = "https://docs.augmentcode.com/cli/setup-auggie/install-auggie-cli"
-                agent_tool_missing = True
-        # GitHub Copilot and Cursor checks are not needed as they're typically available in supported IDEs
-
-        if agent_tool_missing:
-            error_panel = Panel(
-                f"[cyan]{selected_ai}[/cyan] not found\n"
-                f"Install with: [cyan]{install_url}[/cyan]\n"
-                f"{AI_CHOICES[selected_ai]} is required to continue with this project type.\n\n"
-                "Tip: Use [cyan]--ignore-agent-tools[/cyan] to skip this check",
-                title="[red]Agent Detection Error[/red]",
-                border_style="red",
-                padding=(1, 2)
-            )
-            console.print()
-            console.print(error_panel)
-            raise typer.Exit(1)
+    # No agent tool checks needed for Copilot as it's IDE-based
     
     # Determine script type (explicit, interactive, or OS default)
     if script_type:
@@ -1020,17 +958,7 @@ def init(
     
     # Agent folder security notice
     agent_folder_map = {
-        "claude": ".claude/",
-        "gemini": ".gemini/",
-        "cursor": ".cursor/",
-        "qwen": ".qwen/",
-        "opencode": ".opencode/",
-        "codex": ".codex/",
-        "windsurf": ".windsurf/",
-        "kilocode": ".kilocode/",
-        "auggie": ".augment/",
-        "copilot": ".github/",
-        "roo": ".roo/"
+        "bob-ide": ".github/",
     }
     
     if selected_ai in agent_folder_map:
@@ -1108,30 +1036,13 @@ def check():
     tracker = StepTracker("Check Available Tools")
     
     tracker.add("git", "Git version control")
-    tracker.add("claude", "Claude Code CLI")
-    tracker.add("gemini", "Gemini CLI")
-    tracker.add("qwen", "Qwen Code CLI")
+    tracker.add("git", "Git version control")
     tracker.add("code", "Visual Studio Code")
     tracker.add("code-insiders", "Visual Studio Code Insiders")
-    tracker.add("cursor-agent", "Cursor IDE agent")
-    tracker.add("windsurf", "Windsurf IDE")
-    tracker.add("kilocode", "Kilo Code IDE")
-    tracker.add("opencode", "opencode")
-    tracker.add("codex", "Codex CLI")
-    tracker.add("auggie", "Auggie CLI")
-    
+
     git_ok = check_tool_for_tracker("git", tracker)
-    claude_ok = check_tool_for_tracker("claude", tracker)  
-    gemini_ok = check_tool_for_tracker("gemini", tracker)
-    qwen_ok = check_tool_for_tracker("qwen", tracker)
     code_ok = check_tool_for_tracker("code", tracker)
     code_insiders_ok = check_tool_for_tracker("code-insiders", tracker)
-    cursor_ok = check_tool_for_tracker("cursor-agent", tracker)
-    windsurf_ok = check_tool_for_tracker("windsurf", tracker)
-    kilocode_ok = check_tool_for_tracker("kilocode", tracker)
-    opencode_ok = check_tool_for_tracker("opencode", tracker)
-    codex_ok = check_tool_for_tracker("codex", tracker)
-    auggie_ok = check_tool_for_tracker("auggie", tracker)
 
     console.print(tracker.render())
 
@@ -1139,7 +1050,8 @@ def check():
 
     if not git_ok:
         console.print("[dim]Tip: Install git for repository management[/dim]")
-    if not (claude_ok or gemini_ok or cursor_ok or qwen_ok or windsurf_ok or kilocode_ok or opencode_ok or codex_ok or auggie_ok):
+    if not (code_ok or code_insiders_ok):
+        console.print("[dim]Tip: Install Visual Studio Code for Bob-IDE support[/dim]")
         console.print("[dim]Tip: Install an AI assistant for the best experience[/dim]")
 
 

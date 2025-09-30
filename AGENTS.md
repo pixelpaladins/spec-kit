@@ -23,7 +23,7 @@ This section explains how to add support for new AI agents/assistants to the Spe
 Specify supports multiple AI agents by generating agent-specific command files and directory structures when initializing projects. Each agent has its own conventions for:
 
 - **Command file formats** (Markdown, TOML, etc.)
-- **Directory structures** (`.claude/commands/`, `.windsurf/workflows/`, etc.)
+- **Directory structures** (`.claude/commands/`, `.cursor/commands/`, etc.)
 - **Command invocation patterns** (slash commands, CLI tools, etc.)
 - **Argument passing conventions** (`$ARGUMENTS`, `{{args}}`, etc.)
 
@@ -31,17 +31,12 @@ Specify supports multiple AI agents by generating agent-specific command files a
 
 | Agent | Directory | Format | CLI Tool | Description |
 |-------|-----------|---------|----------|-------------|
-| **Claude Code** | `.claude/commands/` | Markdown | `claude` | Anthropic's Claude Code CLI |
-| **Gemini CLI** | `.gemini/commands/` | TOML | `gemini` | Google's Gemini CLI |
-| **GitHub Copilot** | `.github/prompts/` | Markdown | N/A (IDE-based) | GitHub Copilot in VS Code |
-| **Cursor** | `.cursor/commands/` | Markdown | `cursor-agent` | Cursor CLI |
-| **Qwen Code** | `.qwen/commands/` | TOML | `qwen` | Alibaba's Qwen Code CLI |
-| **opencode** | `.opencode/command/` | Markdown | `opencode` | opencode CLI |
-| **Windsurf** | `.windsurf/workflows/` | Markdown | N/A (IDE-based) | Windsurf IDE workflows |
+| **Bob-IDE** | `.github/prompts/` | Markdown | N/A (IDE-based) | Bob-IDE in VS Code |
+
 
 ### Step-by-Step Integration Guide
 
-Follow these steps to add a new agent (using Windsurf as an example):
+Follow these steps to add a new agent (using Bob-IDE as an example):
 
 #### 1. Update AI_CHOICES Constant
 
@@ -49,13 +44,7 @@ Add the new agent to the `AI_CHOICES` dictionary in `src/specify_cli/__init__.py
 
 ```python
 AI_CHOICES = {
-    "copilot": "GitHub Copilot",
-    "claude": "Claude Code", 
-    "gemini": "Gemini CLI",
-    "cursor": "Cursor",
-    "qwen": "Qwen Code",
-    "opencode": "opencode",
-    "windsurf": "Windsurf"  # Add new agent here
+    "bob-ide": "Bob-IDE",
 }
 ```
 
@@ -63,16 +52,7 @@ Also update the `agent_folder_map` in the same file to include the new agent's f
 
 ```python
 agent_folder_map = {
-    "claude": ".claude/",
-    "gemini": ".gemini/",
-    "cursor": ".cursor/",
-    "qwen": ".qwen/",
-    "opencode": ".opencode/",
-    "codex": ".codex/",
-    "windsurf": ".windsurf/",  # Add new agent folder here
-    "kilocode": ".kilocode/",
-    "auggie": ".auggie/",
-    "copilot": ".github/"
+    "bob-ide": ".github/",
 }
 ```
 
@@ -99,16 +79,15 @@ Modify `.github/workflows/scripts/create-release-packages.sh`:
 
 ##### Add to ALL_AGENTS array:
 ```bash
-ALL_AGENTS=(claude gemini copilot cursor qwen opencode windsurf)
+ALL_AGENTS=(bob-ide)
 ```
 
 ##### Add case statement for directory structure:
 ```bash
 case $agent in
-  # ... existing cases ...
-  windsurf)
-    mkdir -p "$base_dir/.windsurf/workflows"
-    generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script" ;;
+  bob-ide)
+    mkdir -p "$base_dir/.github/prompts"
+    generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
 esac
 ```
 
@@ -118,30 +97,22 @@ Modify `.github/workflows/scripts/create-github-release.sh` to include the new a
 
 ```bash
 gh release create "$VERSION" \
-  # ... existing packages ...
-  .genreleases/spec-kit-template-windsurf-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-windsurf-ps-"$VERSION".zip \
-  # Add new agent packages here
+  .genreleases/spec-kit-template-bob-ide-sh-"$VERSION".zip \
+  .genreleases/spec-kit-template-bob-ide-ps-"$VERSION".zip \
 ```
 
 #### 5. Update Agent Context Scripts
 
 ##### Bash script (`scripts/bash/update-agent-context.sh`):
 
-Add file variable:
-```bash
-WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/specify-rules.md"
-```
-
 Add to case statement:
 ```bash
 case "$AGENT_TYPE" in
-  # ... existing cases ...
-  windsurf) update_agent_file "$WINDSURF_FILE" "Windsurf" ;;
-  "") 
-    # ... existing checks ...
-    [ -f "$WINDSURF_FILE" ] && update_agent_file "$WINDSURF_FILE" "Windsurf";
-    # Update default creation condition
+  bob-ide) update_agent_file "$COPILOT_FILE" "Bob-IDE" ;;
+  "")
+    if [[ -f "$COPILOT_FILE" ]]; then
+      update_agent_file "$COPILOT_FILE" "Bob-IDE"
+    fi
     ;;
 esac
 ```
@@ -156,16 +127,9 @@ $windsurfFile = Join-Path $repoRoot '.windsurf/rules/specify-rules.md'
 Add to switch statement:
 ```powershell
 switch ($AgentType) {
-    # ... existing cases ...
-    'windsurf' { Update-AgentFile $windsurfFile 'Windsurf' }
+    'bob-ide' { Update-AgentFile $copilotFile 'Bob-IDE' }
     '' {
-        foreach ($pair in @(
-            # ... existing pairs ...
-            @{file=$windsurfFile; name='Windsurf'}
-        )) {
-            if (Test-Path $pair.file) { Update-AgentFile $pair.file $pair.name }
-        }
-        # Update default creation condition
+        if (Test-Path $copilotFile) { Update-AgentFile $copilotFile 'Bob-IDE' }
     }
 }
 ```
@@ -176,32 +140,16 @@ For agents that require CLI tools, add checks in the `check()` command and agent
 
 ```python
 # In check() command
-tracker.add("windsurf", "Windsurf IDE (optional)")
-windsurf_ok = check_tool_for_tracker("windsurf", "https://windsurf.com/", tracker)
 
-# In init validation (only if CLI tool required)
-elif selected_ai == "windsurf":
-    if not check_tool("windsurf", "Install from: https://windsurf.com/"):
-        console.print("[red]Error:[/red] Windsurf CLI is required for Windsurf projects")
-        agent_tool_missing = True
 ```
 
 **Note**: Skip CLI checks for IDE-based agents (Copilot, Windsurf).
 
 ## Agent Categories
 
-### CLI-Based Agents
-Require a command-line tool to be installed:
-- **Claude Code**: `claude` CLI
-- **Gemini CLI**: `gemini` CLI  
-- **Cursor**: `cursor-agent` CLI
-- **Qwen Code**: `qwen` CLI
-- **opencode**: `opencode` CLI
-
 ### IDE-Based Agents
 Work within integrated development environments:
-- **GitHub Copilot**: Built into VS Code/compatible editors
-- **Windsurf**: Built into Windsurf IDE
+- **Bob-IDE**: Built into VS Code/compatible editors
 
 ## Command File Formats
 
@@ -217,7 +165,7 @@ Command content with {SCRIPT} and $ARGUMENTS placeholders.
 ```
 
 ### TOML Format
-Used by: Gemini, Qwen
+Used by: (No longer used in current agents)
 
 ```toml
 description = "Command description"
@@ -229,11 +177,8 @@ Command content with {SCRIPT} and {{args}} placeholders.
 
 ## Directory Conventions
 
-- **CLI agents**: Usually `.<agent-name>/commands/`
 - **IDE agents**: Follow IDE-specific patterns:
-  - Copilot: `.github/prompts/`
-  - Cursor: `.cursor/commands/`
-  - Windsurf: `.windsurf/workflows/`
+  - Bob-IDE: `.github/prompts/`
 
 ## Argument Patterns
 
