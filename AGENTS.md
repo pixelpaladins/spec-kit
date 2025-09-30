@@ -23,7 +23,7 @@ This section explains how to add support for new AI agents/assistants to the Spe
 Specify supports multiple AI agents by generating agent-specific command files and directory structures when initializing projects. Each agent has its own conventions for:
 
 - **Command file formats** (Markdown, TOML, etc.)
-- **Directory structures** (`.claude/commands/`, `.windsurf/workflows/`, etc.)
+- **Directory structures** (`.claude/commands/`, `.cursor/commands/`, etc.)
 - **Command invocation patterns** (slash commands, CLI tools, etc.)
 - **Argument passing conventions** (`$ARGUMENTS`, `{{args}}`, etc.)
 
@@ -37,11 +37,11 @@ Specify supports multiple AI agents by generating agent-specific command files a
 | **Cursor** | `.cursor/commands/` | Markdown | `cursor-agent` | Cursor CLI |
 | **Qwen Code** | `.qwen/commands/` | TOML | `qwen` | Alibaba's Qwen Code CLI |
 | **opencode** | `.opencode/command/` | Markdown | `opencode` | opencode CLI |
-| **Windsurf** | `.windsurf/workflows/` | Markdown | N/A (IDE-based) | Windsurf IDE workflows |
+
 
 ### Step-by-Step Integration Guide
 
-Follow these steps to add a new agent (using Windsurf as an example):
+Follow these steps to add a new agent (using Cursor as an example):
 
 #### 1. Update AI_CHOICES Constant
 
@@ -55,7 +55,7 @@ AI_CHOICES = {
     "cursor": "Cursor",
     "qwen": "Qwen Code",
     "opencode": "opencode",
-    "windsurf": "Windsurf"  # Add new agent here
+
 }
 ```
 
@@ -69,7 +69,7 @@ agent_folder_map = {
     "qwen": ".qwen/",
     "opencode": ".opencode/",
     "codex": ".codex/",
-    "windsurf": ".windsurf/",  # Add new agent folder here
+
     "kilocode": ".kilocode/",
     "auggie": ".auggie/",
     "copilot": ".github/"
@@ -99,16 +99,14 @@ Modify `.github/workflows/scripts/create-release-packages.sh`:
 
 ##### Add to ALL_AGENTS array:
 ```bash
-ALL_AGENTS=(claude gemini copilot cursor qwen opencode windsurf)
+ALL_AGENTS=(claude gemini copilot cursor qwen opencode)
 ```
 
 ##### Add case statement for directory structure:
 ```bash
 case $agent in
   # ... existing cases ...
-  windsurf)
-    mkdir -p "$base_dir/.windsurf/workflows"
-    generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script" ;;
+
 esac
 ```
 
@@ -119,8 +117,7 @@ Modify `.github/workflows/scripts/create-github-release.sh` to include the new a
 ```bash
 gh release create "$VERSION" \
   # ... existing packages ...
-  .genreleases/spec-kit-template-windsurf-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-windsurf-ps-"$VERSION".zip \
+
   # Add new agent packages here
 ```
 
@@ -137,10 +134,10 @@ Add to case statement:
 ```bash
 case "$AGENT_TYPE" in
   # ... existing cases ...
-  windsurf) update_agent_file "$WINDSURF_FILE" "Windsurf" ;;
+
   "") 
     # ... existing checks ...
-    [ -f "$WINDSURF_FILE" ] && update_agent_file "$WINDSURF_FILE" "Windsurf";
+
     # Update default creation condition
     ;;
 esac
@@ -157,11 +154,11 @@ Add to switch statement:
 ```powershell
 switch ($AgentType) {
     # ... existing cases ...
-    'windsurf' { Update-AgentFile $windsurfFile 'Windsurf' }
+
     '' {
         foreach ($pair in @(
             # ... existing pairs ...
-            @{file=$windsurfFile; name='Windsurf'}
+
         )) {
             if (Test-Path $pair.file) { Update-AgentFile $pair.file $pair.name }
         }
@@ -176,14 +173,7 @@ For agents that require CLI tools, add checks in the `check()` command and agent
 
 ```python
 # In check() command
-tracker.add("windsurf", "Windsurf IDE (optional)")
-windsurf_ok = check_tool_for_tracker("windsurf", "https://windsurf.com/", tracker)
 
-# In init validation (only if CLI tool required)
-elif selected_ai == "windsurf":
-    if not check_tool("windsurf", "Install from: https://windsurf.com/"):
-        console.print("[red]Error:[/red] Windsurf CLI is required for Windsurf projects")
-        agent_tool_missing = True
 ```
 
 **Note**: Skip CLI checks for IDE-based agents (Copilot, Windsurf).

@@ -73,7 +73,6 @@ AI_CHOICES = {
     "qwen": "Qwen Code",
     "opencode": "opencode",
     "codex": "Codex CLI",
-    "windsurf": "Windsurf",
     "kilocode": "Kilo Code",
     "auggie": "Auggie CLI",
     "roo": "Roo Code",
@@ -750,7 +749,7 @@ def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = 
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor, qwen, opencode, codex, windsurf, kilocode, or auggie"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor, qwen, opencode, codex, kilocode, or auggie"),
     script_type: str = typer.Option(None, "--script", help="Script type to use: sh or ps"),
     ignore_agent_tools: bool = typer.Option(False, "--ignore-agent-tools", help="Skip checks for AI agent tools like Claude Code"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
@@ -1026,7 +1025,6 @@ def init(
         "qwen": ".qwen/",
         "opencode": ".opencode/",
         "codex": ".codex/",
-        "windsurf": ".windsurf/",
         "kilocode": ".kilocode/",
         "auggie": ".augment/",
         "copilot": ".github/",
@@ -1114,7 +1112,6 @@ def check():
     tracker.add("code", "Visual Studio Code")
     tracker.add("code-insiders", "Visual Studio Code Insiders")
     tracker.add("cursor-agent", "Cursor IDE agent")
-    tracker.add("windsurf", "Windsurf IDE")
     tracker.add("kilocode", "Kilo Code IDE")
     tracker.add("opencode", "opencode")
     tracker.add("codex", "Codex CLI")
@@ -1127,7 +1124,6 @@ def check():
     code_ok = check_tool_for_tracker("code", tracker)
     code_insiders_ok = check_tool_for_tracker("code-insiders", tracker)
     cursor_ok = check_tool_for_tracker("cursor-agent", tracker)
-    windsurf_ok = check_tool_for_tracker("windsurf", tracker)
     kilocode_ok = check_tool_for_tracker("kilocode", tracker)
     opencode_ok = check_tool_for_tracker("opencode", tracker)
     codex_ok = check_tool_for_tracker("codex", tracker)
@@ -1139,7 +1135,7 @@ def check():
 
     if not git_ok:
         console.print("[dim]Tip: Install git for repository management[/dim]")
-    if not (claude_ok or gemini_ok or cursor_ok or qwen_ok or windsurf_ok or kilocode_ok or opencode_ok or codex_ok or auggie_ok):
+    if not (claude_ok or gemini_ok or cursor_ok or qwen_ok or kilocode_ok or opencode_ok or codex_ok or auggie_ok):
         console.print("[dim]Tip: Install an AI assistant for the best experience[/dim]")
 
 

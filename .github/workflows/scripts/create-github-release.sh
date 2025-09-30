@@ -28,8 +28,7 @@ gh release create "$VERSION" \
   .genreleases/spec-kit-template-opencode-ps-"$VERSION".zip \
   .genreleases/spec-kit-template-qwen-sh-"$VERSION".zip \
   .genreleases/spec-kit-template-qwen-ps-"$VERSION".zip \
-  .genreleases/spec-kit-template-windsurf-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-windsurf-ps-"$VERSION".zip \
+
   .genreleases/spec-kit-template-codex-sh-"$VERSION".zip \
   .genreleases/spec-kit-template-codex-ps-"$VERSION".zip \
   .genreleases/spec-kit-template-kilocode-sh-"$VERSION".zip \
