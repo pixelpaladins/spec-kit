@@ -28,7 +28,7 @@ uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init --here
 
 ### BobKit AI Agent
 
-You can proactively bobkit your AI agent during initialization:
+You can proactively specify your AI agent during initialization:
 
 ```bash
 uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <project_name> --ai claude
