@@ -18,7 +18,7 @@
 - [⚡ Get started](#-get-started)
 - [📽️ Video Overview](#️-video-overview)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
-- [🔧 Specify CLI Reference](#-bobkit-cli-reference)
+- [🔧 BobKit CLI Reference](#-bobkit-cli-reference)
 - [📚 Core philosophy](#-core-philosophy)
 - [🌟 Development phases](#-development-phases)
 - [🎯 Experimental goals](#-experimental-goals)
@@ -37,7 +37,7 @@ Spec-Driven Development **flips the script** on traditional software development
 
 ## ⚡ Get started
 
-### 1. Install Specify
+### 1. Install BobKit
 
 Choose your preferred installation method:
 
@@ -125,7 +125,7 @@ Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.c
 |-----------------------------------------------------------|---------|---------------------------------------------------|
 | [Bob-IDE](https://bob-ide.example.com/)                  | ✅ |                                                   |
 
-## 🔧 Specify CLI Reference
+## 🔧 BobKit CLI Reference
 
 The `bobkit` command supports the following options:
 
@@ -133,7 +133,7 @@ The `bobkit` command supports the following options:
 
 | Command     | Description                                                    |
 |-------------|----------------------------------------------------------------|
-| `init`      | Initialize a new Specify project from the latest template      |
+| `init`      | Initialize a new BobKit project from the latest template      |
 | `check`     | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `qwen`, `opencode`, `codex`) |
 
 ### `bobkit init` Arguments & Options
@@ -268,7 +268,7 @@ If you encounter issues with an agent, please open an issue so we can refine the
 <details>
 <summary>Click to expand the detailed step-by-step walkthrough</summary>
 
-You can use the Specify CLI to bootstrap your project, which will bring in the required artifacts in your environment. Run:
+You can use the BobKit to bootstrap your project, which will bring in the required artifacts in your environment. Run:
 
 ```bash
 bobkit init <project_name>
@@ -286,7 +286,7 @@ bobkit init . --force
 bobkit init --here --force
 ```
 
-![Specify CLI bootstrapping a new project in the terminal](./media/bobkit_cli.gif)
+![BobKit bootstrapping a new project in the terminal](./media/bobkit_cli.gif)
 
 You will be prompted to select the AI agent you are using. You can also proactively bobkit it directly in the terminal:
 

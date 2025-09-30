@@ -6,7 +6,7 @@ This guide will help you get started with Spec-Driven Development using BobKit.
 
 ## The 4-Step Process
 
-### 1. Install Specify
+### 1. Install BobKit
 
 Initialize your project depending on the coding agent you're using:
 

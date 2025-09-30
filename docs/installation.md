@@ -26,7 +26,7 @@ uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init .
 uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init --here
 ```
 
-### Specify AI Agent
+### BobKit AI Agent
 
 You can proactively bobkit your AI agent during initialization:
 
@@ -36,7 +36,7 @@ uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <project_
 uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <project_name> --ai copilot
 ```
 
-### Specify Script Type (Shell vs PowerShell)
+### BobKit Script Type (Shell vs PowerShell)
 
 All automation scripts now have both Bash (`.sh`) and PowerShell (`.ps1`) variants.
 

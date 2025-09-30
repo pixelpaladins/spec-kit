@@ -1,10 +1,10 @@
 # AGENTS.md
 
-## About BobKit and Specify
+## About BobKit and BobKit
 
 **GitHub BobKit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software.
 
-**Specify CLI** is the command-line interface that bootstraps projects with the BobKit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
+**BobKit** is the command-line interface that bootstraps projects with the BobKit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
 
 The toolkit supports multiple AI coding assistants, allowing teams to use their preferred tools while maintaining consistent project structure and development practices.
 
@@ -12,15 +12,15 @@ The toolkit supports multiple AI coding assistants, allowing teams to use their 
 
 ## General practices
 
-- Any changes to `__init__.py` for the Specify CLI require a version rev in `pyproject.toml` and addition of entries to `CHANGELOG.md`.
+- Any changes to `__init__.py` for the BobKit require a version rev in `pyproject.toml` and addition of entries to `CHANGELOG.md`.
 
 ## Adding New Agent Support
 
-This section explains how to add support for new AI agents/assistants to the Specify CLI. Use this guide as a reference when integrating new AI tools into the Spec-Driven Development workflow.
+This section explains how to add support for new AI agents/assistants to the BobKit. Use this guide as a reference when integrating new AI tools into the Spec-Driven Development workflow.
 
 ### Overview
 
-Specify supports multiple AI agents by generating agent-specific command files and directory structures when initializing projects. Each agent has its own conventions for:
+BobKit supports multiple AI agents by generating agent-specific command files and directory structures when initializing projects. Each agent has its own conventions for:
 
 - **Command file formats** (Markdown, TOML, etc.)
 - **Directory structures** (`.claude/commands/`, `.cursor/commands/`, etc.)
@@ -40,7 +40,7 @@ Follow these steps to add a new agent (using Bob-IDE as an example):
 
 #### 1. Update AI_CHOICES Constant
 
-Add the new agent to the `AI_CHOICES` dictionary in `src/specify_cli/__init__.py`:
+Add the new agent to the `AI_CHOICES` dictionary in `src/bobkit/__init__.py`:
 
 ```python
 AI_CHOICES = {

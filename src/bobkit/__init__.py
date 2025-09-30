@@ -415,7 +415,7 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> bool:
             console.print("[cyan]Initializing git repository...[/cyan]")
         subprocess.run(["git", "init"], check=True, capture_output=True)
         subprocess.run(["git", "add", "."], check=True, capture_output=True)
-        subprocess.run(["git", "commit", "-m", "Initial commit from Specify template"], check=True, capture_output=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit from BobKit template"], check=True, capture_output=True)
         if not quiet:
             console.print("[green]✓[/green] Git repository initialized")
         return True
@@ -829,7 +829,7 @@ def init(
     current_dir = Path.cwd()
     
     setup_lines = [
-        "[cyan]Specify Project Setup[/cyan]",
+        "[cyan]BobKit Project Setup[/cyan]",
         "",
         f"{'Project':<15} [green]{project_path.name}[/green]",
         f"{'Working Path':<15} [dim]{current_dir}[/dim]",
@@ -885,7 +885,7 @@ def init(
     
     # Download and set up project
     # New tree-based progress (no emojis); include earlier substeps
-    tracker = StepTracker("Initialize Specify Project")
+    tracker = StepTracker("Initialize BobKit Project")
     # Flag to allow suppressing legacy headings
     sys._specify_tracker_active = True
     # Pre steps recorded as completed before live rendering
