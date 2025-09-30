@@ -1,10 +1,8 @@
 # AGENTS.md
 
-## About BobKit and BobKit
+## About BobKit
 
-**GitHub BobKit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software.
-
-**BobKit** is the command-line interface that bootstraps projects with the BobKit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
+**BobKit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software. It is also the command-line interface that bootstraps projects with the BobKit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
 
 The toolkit supports multiple AI coding assistants, allowing teams to use their preferred tools while maintaining consistent project structure and development practices.
 
