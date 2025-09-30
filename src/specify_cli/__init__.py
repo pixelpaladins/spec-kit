@@ -66,7 +66,7 @@ def _github_auth_headers(cli_token: str | None = None) -> dict:
 
 # Constants
 AI_CHOICES = {
-    "copilot": "GitHub Copilot",
+    "bob-ide": "Bob-IDE",
 }
 # Add script type choices
 SCRIPT_TYPE_CHOICES = {"sh": "POSIX Shell (bash/zsh)", "ps": "PowerShell"}
@@ -740,7 +740,7 @@ def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = 
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: copilot"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: bob-ide"),
     script_type: str = typer.Option(None, "--script", help="Script type to use: sh or ps"),
     ignore_agent_tools: bool = typer.Option(False, "--ignore-agent-tools", help="Skip checks for AI agent tools like Claude Code"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
@@ -752,21 +752,21 @@ def init(
 ):
     """
     Initialize a new Specify project from the latest template.
-    
+
     This command will:
     1. Check that required tools are installed (git is optional)
-    2. Let you choose your AI assistant (GitHub Copilot)
+    2. Let you choose your AI assistant (Bob-IDE)
     3. Download the appropriate template from GitHub
     4. Extract the template to a new project directory or current directory
     5. Initialize a fresh git repository (if not --no-git and no existing repo)
     6. Optionally set up AI assistant commands
-    
+
     Examples:
         specify init my-project
-        specify init my-project --ai copilot --no-git
-        specify init . --ai copilot         # Initialize in current directory
+        specify init my-project --ai bob-ide --no-git
+        specify init . --ai bob-ide         # Initialize in current directory
         specify init .                     # Initialize in current directory (interactive AI selection)
-        specify init --here --ai copilot    # Alternative syntax for current directory
+        specify init --here --ai bob-ide    # Alternative syntax for current directory
         specify init --here
         specify init --here --force  # Skip confirmation when current directory not empty
     """
@@ -855,7 +855,7 @@ def init(
         selected_ai = select_with_arrows(
             AI_CHOICES, 
             "Choose your AI assistant:", 
-            "copilot"
+            "bob-ide"
         )
     
     # No agent tool checks needed for Copilot as it's IDE-based
@@ -958,7 +958,7 @@ def init(
     
     # Agent folder security notice
     agent_folder_map = {
-        "copilot": ".github/",
+        "bob-ide": ".github/",
     }
     
     if selected_ai in agent_folder_map:
@@ -1051,6 +1051,7 @@ def check():
     if not git_ok:
         console.print("[dim]Tip: Install git for repository management[/dim]")
     if not (code_ok or code_insiders_ok):
+        console.print("[dim]Tip: Install Visual Studio Code for Bob-IDE support[/dim]")
         console.print("[dim]Tip: Install an AI assistant for the best experience[/dim]")
 
 

@@ -547,16 +547,16 @@ update_specific_agent() {
     local agent_type="$1"
     
     case "$agent_type" in
-         copilot)
-             update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+         bob-ide)
+             update_agent_file "$COPILOT_FILE" "Bob-IDE"
              ;;
         gemini)
             update_agent_file "$GEMINI_FILE" "Gemini CLI"
             ;;
-        copilot)
-            update_agent_file "$COPILOT_FILE" "GitHub Copilot"
-            ;;
-        cursor)
+         bob-ide)
+             update_agent_file "$COPILOT_FILE" "Bob-IDE"
+             ;;
+         cursor)
             update_agent_file "$CURSOR_FILE" "Cursor IDE"
             ;;
         qwen)
@@ -601,10 +601,10 @@ update_all_existing_agents() {
     fi
     
     if [[ -f "$COPILOT_FILE" ]]; then
-        update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+        update_agent_file "$COPILOT_FILE" "Bob-IDE"
         found_agent=true
     fi
-    
+
     if [[ -f "$CURSOR_FILE" ]]; then
         update_agent_file "$CURSOR_FILE" "Cursor IDE"
         found_agent=true

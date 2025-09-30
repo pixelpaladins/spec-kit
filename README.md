@@ -123,7 +123,7 @@ Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.c
 
 | Agent                                                     | Support | Notes                                             |
 |-----------------------------------------------------------|---------|---------------------------------------------------|
-| [GitHub Copilot](https://code.visualstudio.com/)          | ✅ |                                                   |
+| [Bob-IDE](https://bob-ide.example.com/)                  | ✅ |                                                   |
 
 ## 🔧 Specify CLI Reference
 
@@ -141,7 +141,7 @@ The `specify` command supports the following options:
 | Argument/Option        | Type     | Description                                                                  |
 |------------------------|----------|------------------------------------------------------------------------------|
 | `<project-name>`       | Argument | Name for your new project directory (optional if using `--here`, or use `.` for current directory) |
-| `--ai`                 | Option   | AI assistant to use: `copilot` |
+| `--ai`                 | Option   | AI assistant to use: `bob-ide` |
 | `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                 |
 | `--ignore-agent-tools` | Flag     | Skip checks for AI agent tools (not needed for Copilot)                     |
 | `--no-git`             | Flag     | Skip git repository initialization                                          |
@@ -158,12 +158,12 @@ The `specify` command supports the following options:
 specify init my-project
 
 # Initialize with PowerShell scripts (Windows/cross-platform)
-specify init my-project --ai copilot --script ps
+specify init my-project --ai bob-ide --script ps
 
 # Initialize in current directory
-specify init . --ai copilot
+specify init . --ai bob-ide
 # or use the --here flag
-specify init --here --ai copilot
+specify init --here --ai bob-ide
 
 # Force merge into current (non-empty) directory without confirmation
 specify init . --force --ai copilot
@@ -249,7 +249,7 @@ Our research and experimentation focus on:
 ## 🔧 Prerequisites
 
 - **Linux/macOS** (or WSL2 on Windows)
-- AI coding agent: [GitHub Copilot](https://code.visualstudio.com/)
+- AI coding agent: [Bob-IDE](https://bob-ide.example.com/)
 - [uv](https://docs.astral.sh/uv/) for package management
 - [Python 3.11+](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)

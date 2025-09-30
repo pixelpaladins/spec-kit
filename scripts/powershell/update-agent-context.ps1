@@ -365,7 +365,7 @@ function Update-SpecificAgent {
         [string]$Type
     )
     switch ($Type) {
-        'copilot'  { Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'GitHub Copilot' }
+        'bob-ide'  { Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'Bob-IDE' }
         default { Write-Err "Unknown agent type '$Type'"; Write-Err 'Expected: copilot'; return $false }
     }
 }
@@ -373,7 +373,7 @@ function Update-SpecificAgent {
 function Update-AllExistingAgents {
     $found = $false
     $ok = $true
-    if (Test-Path $COPILOT_FILE)  { if (-not (Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'GitHub Copilot')) { $ok = $false }; $found = $true }
+    if (Test-Path $COPILOT_FILE)  { if (-not (Update-AgentFile -TargetFile $COPILOT_FILE  -AgentName 'Bob-IDE')) { $ok = $false }; $found = $true }
     if (-not $found) {
         Write-Info 'No existing agent files found, creating default Copilot file...'
         if (-not (Update-AgentFile -TargetFile $COPILOT_FILE -AgentName 'GitHub Copilot')) { $ok = $false }
@@ -388,7 +388,7 @@ function Print-Summary {
     if ($NEW_FRAMEWORK) { Write-Host "  - Added framework: $NEW_FRAMEWORK" }
     if ($NEW_DB -and $NEW_DB -ne 'N/A') { Write-Host "  - Added database: $NEW_DB" }
     Write-Host ''
-    Write-Info 'Usage: ./update-agent-context.ps1 [-AgentType copilot]'
+    Write-Info 'Usage: ./update-agent-context.ps1 [-AgentType bob-ide]'
 }
 
 function Main {

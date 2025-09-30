@@ -31,12 +31,12 @@ Specify supports multiple AI agents by generating agent-specific command files a
 
 | Agent | Directory | Format | CLI Tool | Description |
 |-------|-----------|---------|----------|-------------|
-| **GitHub Copilot** | `.github/prompts/` | Markdown | N/A (IDE-based) | GitHub Copilot in VS Code |
+| **Bob-IDE** | `.github/prompts/` | Markdown | N/A (IDE-based) | Bob-IDE in VS Code |
 
 
 ### Step-by-Step Integration Guide
 
-Follow these steps to add a new agent (using GitHub Copilot as an example):
+Follow these steps to add a new agent (using Bob-IDE as an example):
 
 #### 1. Update AI_CHOICES Constant
 
@@ -44,7 +44,7 @@ Add the new agent to the `AI_CHOICES` dictionary in `src/specify_cli/__init__.py
 
 ```python
 AI_CHOICES = {
-    "copilot": "GitHub Copilot",
+    "bob-ide": "Bob-IDE",
 }
 ```
 
@@ -52,7 +52,7 @@ Also update the `agent_folder_map` in the same file to include the new agent's f
 
 ```python
 agent_folder_map = {
-    "copilot": ".github/",
+    "bob-ide": ".github/",
 }
 ```
 
@@ -79,15 +79,15 @@ Modify `.github/workflows/scripts/create-release-packages.sh`:
 
 ##### Add to ALL_AGENTS array:
 ```bash
-ALL_AGENTS=(copilot)
+ALL_AGENTS=(bob-ide)
 ```
 
 ##### Add case statement for directory structure:
 ```bash
 case $agent in
-  copilot)
+  bob-ide)
     mkdir -p "$base_dir/.github/prompts"
-    generate_commands copilot prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
+    generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
 esac
 ```
 
@@ -97,8 +97,8 @@ Modify `.github/workflows/scripts/create-github-release.sh` to include the new a
 
 ```bash
 gh release create "$VERSION" \
-  .genreleases/spec-kit-template-copilot-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-copilot-ps-"$VERSION".zip \
+  .genreleases/spec-kit-template-bob-ide-sh-"$VERSION".zip \
+  .genreleases/spec-kit-template-bob-ide-ps-"$VERSION".zip \
 ```
 
 #### 5. Update Agent Context Scripts
@@ -108,10 +108,10 @@ gh release create "$VERSION" \
 Add to case statement:
 ```bash
 case "$AGENT_TYPE" in
-  copilot) update_agent_file "$COPILOT_FILE" "GitHub Copilot" ;;
-  "") 
+  bob-ide) update_agent_file "$COPILOT_FILE" "Bob-IDE" ;;
+  "")
     if [[ -f "$COPILOT_FILE" ]]; then
-      update_agent_file "$COPILOT_FILE" "GitHub Copilot"
+      update_agent_file "$COPILOT_FILE" "Bob-IDE"
     fi
     ;;
 esac
@@ -127,9 +127,9 @@ $windsurfFile = Join-Path $repoRoot '.windsurf/rules/specify-rules.md'
 Add to switch statement:
 ```powershell
 switch ($AgentType) {
-    'copilot' { Update-AgentFile $copilotFile 'GitHub Copilot' }
+    'bob-ide' { Update-AgentFile $copilotFile 'Bob-IDE' }
     '' {
-        if (Test-Path $copilotFile) { Update-AgentFile $copilotFile 'GitHub Copilot' }
+        if (Test-Path $copilotFile) { Update-AgentFile $copilotFile 'Bob-IDE' }
     }
 }
 ```
@@ -149,7 +149,7 @@ For agents that require CLI tools, add checks in the `check()` command and agent
 
 ### IDE-Based Agents
 Work within integrated development environments:
-- **GitHub Copilot**: Built into VS Code/compatible editors
+- **Bob-IDE**: Built into VS Code/compatible editors
 
 ## Command File Formats
 
@@ -178,7 +178,7 @@ Command content with {SCRIPT} and {{args}} placeholders.
 ## Directory Conventions
 
 - **IDE agents**: Follow IDE-specific patterns:
-  - Copilot: `.github/prompts/`
+  - Bob-IDE: `.github/prompts/`
 
 ## Argument Patterns
 

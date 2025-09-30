@@ -137,16 +137,16 @@ build_variant() {
   # This keeps formats readable without extra abstraction.
 
    case $agent in
-     copilot)
+     bob-ide)
        mkdir -p "$base_dir/.github/prompts"
-       generate_commands copilot prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
+       generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.github/prompts" "$script" ;;
    esac
   ( cd "$base_dir" && zip -r "../spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip" . )
   echo "Created $GENRELEASES_DIR/spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip"
 }
 
 # Determine agent list
-ALL_AGENTS=(copilot)
+ALL_AGENTS=(bob-ide)
 ALL_SCRIPTS=(sh ps)
 
 
