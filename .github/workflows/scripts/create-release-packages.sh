@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # create-release-packages.sh (workflow-local)
-# Build Spec Kit template release archives for each supported AI assistant and script type.
+# Build BobKit template release archives for each supported AI assistant and script type.
 # Usage: .github/workflows/scripts/create-release-packages.sh <version>
 #   Version argument should include leading 'v'.
 #   Optionally set AGENTS and/or SCRIPTS env vars to limit what gets built.
@@ -142,8 +142,8 @@ build_variant() {
         mkdir -p "$base_dir/.bob/rules"
         generate_commands bob-ide prompt.md "\$ARGUMENTS" "$base_dir/.bob/commands" "$script" ;;
     esac
-  ( cd "$base_dir" && zip -r "../spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip" . )
-  echo "Created $GENRELEASES_DIR/spec-kit-template-${agent}-${script}-${NEW_VERSION}.zip"
+   ( cd "$base_dir" && zip -r "../BobKit-template-${agent}-${script}-${NEW_VERSION}.zip" . )
+   echo "Created $GENRELEASES_DIR/BobKit-template-${agent}-${script}-${NEW_VERSION}.zip"
 }
 
 # Determine agent list
@@ -194,4 +194,4 @@ for agent in "${AGENT_LIST[@]}"; do
 done
 
 echo "Archives in $GENRELEASES_DIR:"
-ls -1 "$GENRELEASES_DIR"/spec-kit-template-*-"${NEW_VERSION}".zip
+ls -1 "$GENRELEASES_DIR"/BobKit-template-*-"${NEW_VERSION}".zip

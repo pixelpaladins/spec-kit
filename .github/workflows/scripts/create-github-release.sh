@@ -16,7 +16,7 @@ VERSION="$1"
 VERSION_NO_V=${VERSION#v}
 
 gh release create "$VERSION" \
-  .genreleases/spec-kit-template-bob-ide-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-bob-ide-ps-"$VERSION".zip \
-  --title "Spec Kit Templates - $VERSION_NO_V" \
+  .genreleases/BobKit-template-bob-ide-sh-"$VERSION".zip \
+  .genreleases/BobKit-template-bob-ide-ps-"$VERSION".zip \
+  --title "BobKit Templates - $VERSION_NO_V" \
   --notes-file release_notes.md

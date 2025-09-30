@@ -1,4 +1,4 @@
-## Contributing to Spec Kit
+## Contributing to BobKit
 
 Hi there! We're thrilled that you'd like to contribute to Spec Kit. Contributions to this project are [released](https://help.github.com/articles/github-terms-of-service/#6-contributions-under-repository-license) to the public under the [project's open source license](LICENSE).
 
@@ -11,7 +11,7 @@ These are one time installations required to be able to test your changes locall
 1. Install [Python 3.11+](https://www.python.org/downloads/)
 1. Install [uv](https://docs.astral.sh/uv/) for package management
 1. Install [Git](https://git-scm.com/downloads)
-1. Have an [AI coding agent available](README.md#-supported-ai-agents)
+1. Have an [AI coding agent available](README.md#🤖-supported-ai-agents)
 
 ## Submitting a pull request
 
@@ -20,7 +20,7 @@ These are one time installations required to be able to test your changes locall
 
 1. Fork and clone the repository
 1. Configure and install the dependencies: `uv sync`
-1. Make sure the CLI works on your machine: `uv run specify --help`
+1. Make sure the CLI works on your machine: `uv run bobkit --help`
 1. Create a new branch: `git checkout -b my-branch-name`
 1. Make your change, add tests, and make sure everything still works
 1. Test the CLI functionality with a sample project if relevant
@@ -38,9 +38,9 @@ Here are a few things you can do that will increase the likelihood of your pull 
 
 ## Development workflow
 
-When working on spec-kit:
+When working on BobKit:
 
-1. Test changes with the `specify` CLI commands (`/specify`, `/plan`, `/tasks`) in your coding agent of choice
+1. Test changes with the `bobkit` CLI commands (`/bobkit`, `/plan`, `/tasks`) in your coding agent of choice
 2. Verify templates are working correctly in `templates/` directory
 3. Test script functionality in the `scripts/` directory
 4. Ensure memory files (`memory/constitution.md`) are updated if major process changes are made

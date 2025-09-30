@@ -1,6 +1,6 @@
 <div align="center">
     <img src="./media/logo_small.webp"/>
-    <h1>🌱 Spec Kit</h1>
+    <h1>🌱 BobKit</h1>
     <h3><em>Build high-quality software faster.</em></h3>
 </div>
 
@@ -8,7 +8,7 @@
     <strong>An effort to allow organizations to focus on product scenarios rather than writing undifferentiated code with the help of Spec-Driven Development.</strong>
 </p>
 
-[![Release](https://github.com/pixelpaladins/spec-kit/actions/workflows/release.yml/badge.svg)](https://github.com/pixelpaladins/spec-kit/actions/workflows/release.yml)
+[![Release](https://github.com/pixelpaladins/BobKit/actions/workflows/release.yml/badge.svg)](https://github.com/pixelpaladins/BobKit/actions/workflows/release.yml)
 
 ---
 
@@ -18,7 +18,7 @@
 - [⚡ Get started](#-get-started)
 - [📽️ Video Overview](#️-video-overview)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
-- [🔧 Specify CLI Reference](#-specify-cli-reference)
+- [🔧 Specify CLI Reference](#-bobkit-cli-reference)
 - [📚 Core philosophy](#-core-philosophy)
 - [🌟 Development phases](#-development-phases)
 - [🎯 Experimental goals](#-experimental-goals)
@@ -46,14 +46,14 @@ Choose your preferred installation method:
 Install once and use everywhere:
 
 ```bash
-uv tool install specify-cli --from git+https://github.com/pixelpaladins/spec-kit.git
+uv tool install bobkit-cli --from git+https://github.com/pixelpaladins/BobKit.git
 ```
 
 Then use the tool directly:
 
 ```bash
-specify init <PROJECT_NAME>
-specify check
+bobkit init <PROJECT_NAME>
+bobkit check
 ```
 
 #### Option 2: One-time Usage
@@ -61,7 +61,7 @@ specify check
 Run directly without installing:
 
 ```bash
-uvx --from git+https://github.com/pixelpaladins/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <PROJECT_NAME>
 ```
 
 **Benefits of persistent installation:**
@@ -81,10 +81,10 @@ Use the **`/constitution`** command to create your project's governing principle
 
 ### 3. Create the spec
 
-Use the **`/specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+Use the **`/bobkit`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
 
 ```bash
-/specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/bobkit Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
 ```
 
 ### 4. Create a technical implementation plan
@@ -117,7 +117,7 @@ For detailed step-by-step instructions, see our [comprehensive guide](./spec-dri
 
 Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)!
 
-[![Spec Kit video header](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
+[![BobKit video header](/media/BobKit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
 
 ## 🤖 Supported AI Agents
 
@@ -127,7 +127,7 @@ Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.c
 
 ## 🔧 Specify CLI Reference
 
-The `specify` command supports the following options:
+The `bobkit` command supports the following options:
 
 ### Commands
 
@@ -136,7 +136,7 @@ The `specify` command supports the following options:
 | `init`      | Initialize a new Specify project from the latest template      |
 | `check`     | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `qwen`, `opencode`, `codex`) |
 
-### `specify init` Arguments & Options
+### `bobkit init` Arguments & Options
 
 | Argument/Option        | Type     | Description                                                                  |
 |------------------------|----------|------------------------------------------------------------------------------|
@@ -155,42 +155,42 @@ The `specify` command supports the following options:
 
 ```bash
 # Basic project initialization
-specify init my-project
+bobkit init my-project
 
 # Initialize with PowerShell scripts (Windows/cross-platform)
-specify init my-project --ai bob-ide --script ps
+bobkit init my-project --ai bob-ide --script ps
 
 # Initialize in current directory
-specify init . --ai bob-ide
+bobkit init . --ai bob-ide
 # or use the --here flag
-specify init --here --ai bob-ide
+bobkit init --here --ai bob-ide
 
 # Force merge into current (non-empty) directory without confirmation
-specify init . --force --ai copilot
+bobkit init . --force --ai copilot
 # or 
-specify init --here --force --ai copilot
+bobkit init --here --force --ai copilot
 
 # Skip git initialization
-specify init my-project --ai gemini --no-git
+bobkit init my-project --ai gemini --no-git
 
 # Enable debug output for troubleshooting
-specify init my-project --ai claude --debug
+bobkit init my-project --ai claude --debug
 
 # Use GitHub token for API requests (helpful for corporate environments)
-specify init my-project --ai claude --github-token ghp_your_token_here
+bobkit init my-project --ai claude --github-token ghp_your_token_here
 
 # Check system requirements
-specify check
+bobkit check
 ```
 
 ### Available Slash Commands
 
-After running `specify init`, your AI coding agent will have access to these slash commands for structured development:
+After running `bobkit init`, your AI coding agent will have access to these slash commands for structured development:
 
 | Command         | Description                                                           |
 |-----------------|-----------------------------------------------------------------------|
 | `/constitution` | Create or update project governing principles and development guidelines |
-| `/specify`      | Define what you want to build (requirements and user stories)        |
+| `/bobkit`      | Define what you want to build (requirements and user stories)        |
 | `/clarify`      | Clarify underspecified areas (must be run before `/plan` unless explicitly skipped; formerly `/quizme`) |
 | `/plan`         | Create technical implementation plans with your chosen tech stack     |
 | `/tasks`        | Generate actionable task lists for implementation                     |
@@ -271,50 +271,50 @@ If you encounter issues with an agent, please open an issue so we can refine the
 You can use the Specify CLI to bootstrap your project, which will bring in the required artifacts in your environment. Run:
 
 ```bash
-specify init <project_name>
+bobkit init <project_name>
 ```
 
 Or initialize in the current directory:
 
 ```bash
-specify init .
+bobkit init .
 # or use the --here flag
-specify init --here
+bobkit init --here
 # Skip confirmation when the directory already has files
-specify init . --force
+bobkit init . --force
 # or
-specify init --here --force
+bobkit init --here --force
 ```
 
-![Specify CLI bootstrapping a new project in the terminal](./media/specify_cli.gif)
+![Specify CLI bootstrapping a new project in the terminal](./media/bobkit_cli.gif)
 
-You will be prompted to select the AI agent you are using. You can also proactively specify it directly in the terminal:
+You will be prompted to select the AI agent you are using. You can also proactively bobkit it directly in the terminal:
 
 ```bash
-specify init <project_name> --ai claude
-specify init <project_name> --ai gemini
-specify init <project_name> --ai copilot
-specify init <project_name> --ai cursor
-specify init <project_name> --ai qwen
-specify init <project_name> --ai opencode
-specify init <project_name> --ai codex
+bobkit init <project_name> --ai claude
+bobkit init <project_name> --ai gemini
+bobkit init <project_name> --ai copilot
+bobkit init <project_name> --ai cursor
+bobkit init <project_name> --ai qwen
+bobkit init <project_name> --ai opencode
+bobkit init <project_name> --ai codex
 
 # Or in current directory:
-specify init . --ai claude
-specify init . --ai codex
+bobkit init . --ai claude
+bobkit init . --ai codex
 # or use --here flag
-specify init --here --ai claude
-specify init --here --ai codex
+bobkit init --here --ai claude
+bobkit init --here --ai codex
 # Force merge into a non-empty current directory
-specify init . --force --ai claude
+bobkit init . --force --ai claude
 # or
-specify init --here --force --ai claude
+bobkit init --here --force --ai claude
 ```
 
 The CLI will check if you have Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, or Codex CLI installed. If you do not, or you prefer to get the templates without checking for the right tools, use `--ignore-agent-tools` with your command:
 
 ```bash
-specify init <project_name> --ai claude --ignore-agent-tools
+bobkit init <project_name> --ai claude --ignore-agent-tools
 ```
 
 ### **STEP 1:** Establish project principles
@@ -323,7 +323,7 @@ Go to the project folder and run your AI agent. In our example, we're using `cla
 
 ![Bootstrapping Claude Code environment](./media/bootstrap-claude-code.gif)
 
-You will know that things are configured correctly if you see the `/constitution`, `/specify`, `/plan`, `/tasks`, and `/implement` commands available.
+You will know that things are configured correctly if you see the `/constitution`, `/bobkit`, `/plan`, `/tasks`, and `/implement` commands available.
 
 The first step should be establishing your project's governing principles using the `/constitution` command. This helps ensure consistent decision-making throughout all subsequent development phases:
 
@@ -331,11 +331,11 @@ The first step should be establishing your project's governing principles using 
 /constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
 ```
 
-This step creates or updates the `.specify/memory/constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
+This step creates or updates the `.bobkit/memory/constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
 
 ### **STEP 2:** Create project specifications
 
-With your project principles established, you can now create the functional specifications. Use the `/specify` command and then provide the concrete requirements for the project you want to develop.
+With your project principles established, you can now create the functional specifications. Use the `/bobkit` command and then provide the concrete requirements for the project you want to develop.
 
 >[!IMPORTANT]
 >Be as explicit as possible about _what_ you are trying to build and _why_. **Do not focus on the tech stack at this point**.
@@ -370,7 +370,7 @@ The produced specification should contain a set of user stories and functional r
 At this stage, your project folder contents should resemble the following:
 
 ```text
-└── .specify
+└── .bobkit
     ├── memory
     │	 └── constitution.md
     ├── scripts
@@ -552,7 +552,7 @@ rm gcm-linux_amd64.2.6.1.deb
 
 ## 💬 Support
 
-For support, please open a [GitHub issue](https://github.com/pixelpaladins/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
+For support, please open a [GitHub issue](https://github.com/pixelpaladins/BobKit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
 
 ## 🙏 Acknowledgements
 

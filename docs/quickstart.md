@@ -1,8 +1,8 @@
 # Quick Start Guide
 
-This guide will help you get started with Spec-Driven Development using Spec Kit.
+This guide will help you get started with Spec-Driven Development using BobKit.
 
-> NEW: All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `specify` CLI auto-selects based on OS unless you pass `--script sh|ps`.
+> NEW: All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `bobkit` CLI auto-selects based on OS unless you pass `--script sh|ps`.
 
 ## The 4-Step Process
 
@@ -11,21 +11,21 @@ This guide will help you get started with Spec-Driven Development using Spec Kit
 Initialize your project depending on the coding agent you're using:
 
 ```bash
-uvx --from git+https://github.com/pixelpaladins/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <PROJECT_NAME>
 ```
 
 Pick script type explicitly (optional):
 ```bash
-uvx --from git+https://github.com/pixelpaladins/spec-kit.git specify init <PROJECT_NAME> --script ps  # Force PowerShell
-uvx --from git+https://github.com/pixelpaladins/spec-kit.git specify init <PROJECT_NAME> --script sh  # Force POSIX shell
+uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <PROJECT_NAME> --script ps  # Force PowerShell
+uvx --from git+https://github.com/pixelpaladins/BobKit.git bobkit init <PROJECT_NAME> --script sh  # Force POSIX shell
 ```
 
 ### 2. Create the Spec
 
-Use the `/specify` command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+Use the `/bobkit` command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
 
 ```bash
-/specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/bobkit Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
 ```
 
 ### 3. Create a Technical Implementation Plan
@@ -44,7 +44,7 @@ Use `/tasks` to create an actionable task list, then ask your agent to implement
 
 Here's a complete example of building a team productivity platform:
 
-### Step 1: Define Requirements with `/specify`
+### Step 1: Define Requirements with `/bobkit`
 
 ```text
 Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,

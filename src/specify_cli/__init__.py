@@ -10,18 +10,18 @@
 # ]
 # ///
 """
-Specify CLI - Setup tool for Specify projects
+BobKit CLI - Setup tool for BobKit projects
 
 Usage:
-    uvx specify-cli.py init <project-name>
-    uvx specify-cli.py init .
-    uvx specify-cli.py init --here
+    uvx bobkit-cli.py init <project-name>
+    uvx bobkit-cli.py init .
+    uvx bobkit-cli.py init --here
 
 Or install globally:
-    uv tool install --from specify-cli.py specify-cli
-    specify init <project-name>
-    specify init .
-    specify init --here
+    uv tool install --from bobkit-cli.py bobkit-cli
+    bobkit init <project-name>
+    bobkit init .
+    bobkit init --here
 """
 
 import os
@@ -84,7 +84,7 @@ BANNER = """
 ╚══════╝╚═╝     ╚══════╝ ╚═════╝╚═╝╚═╝        ╚═╝   
 """
 
-TAGLINE = "GitHub Spec Kit - Spec-Driven Development Toolkit"
+TAGLINE = "GitHub BobKit - Spec-Driven Development Toolkit"
 class StepTracker:
     """Track and render hierarchical steps without emojis, similar to Claude Code tree output.
     Supports live auto-refresh via an attached refresh callback.
@@ -296,8 +296,8 @@ class BannerGroup(TyperGroup):
 
 
 app = typer.Typer(
-    name="specify",
-    help="Setup tool for Specify spec-driven development projects",
+    name="bobkit",
+    help="Setup tool for BobKit spec-driven development projects",
     add_completion=False,
     invoke_without_command=True,
     cls=BannerGroup,
@@ -364,7 +364,7 @@ def check_tool(tool: str, install_hint: str) -> bool:
     """Check if a tool is installed."""
     
     # Special handling for Claude CLI after `claude migrate-installer`
-    # See: https://github.com/pixelpaladins/spec-kit/issues/123
+    # See: https://github.com/pixelpaladins/BobKit/issues/123
     # The migrate-installer command REMOVES the original executable from PATH
     # and creates an alias at ~/.claude/local/claude instead
     # This path should be prioritized over other claude executables in PATH
@@ -425,7 +425,7 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> bool:
 
 def download_template_from_github(ai_assistant: str, download_dir: Path, *, script_type: str = "sh", verbose: bool = True, show_progress: bool = True, client: httpx.Client = None, debug: bool = False, github_token: str = None) -> Tuple[Path, dict]:
     repo_owner = "pixelpaladins"
-    repo_name = "spec-kit"
+    repo_name = "BobKit"
     if client is None:
         client = httpx.Client(verify=ssl_context)
     
@@ -457,7 +457,7 @@ def download_template_from_github(ai_assistant: str, download_dir: Path, *, scri
     
     # Find the template asset for the specified AI assistant
     assets = release_data.get("assets", [])
-    pattern = f"spec-kit-template-{ai_assistant}-{script_type}"
+    pattern = f"BobKit-template-{ai_assistant}-{script_type}"
     matching_assets = [
         asset for asset in assets
         if pattern in asset["name"] and asset["name"].endswith(".zip")
@@ -751,7 +751,7 @@ def init(
     github_token: str = typer.Option(None, "--github-token", help="GitHub token to use for API requests (or set GH_TOKEN or GITHUB_TOKEN environment variable)"),
 ):
     """
-    Initialize a new Specify project from the latest template.
+    Initialize a new BobKit project from the latest template.
 
     This command will:
     1. Check that required tools are installed (git is optional)
@@ -762,13 +762,13 @@ def init(
     6. Optionally set up AI assistant commands
 
     Examples:
-        specify init my-project
-        specify init my-project --ai bob-ide --no-git
-        specify init . --ai bob-ide         # Initialize in current directory
-        specify init .                     # Initialize in current directory (interactive AI selection)
-        specify init --here --ai bob-ide    # Alternative syntax for current directory
-        specify init --here
-        specify init --here --force  # Skip confirmation when current directory not empty
+        bobkit init my-project
+        bobkit init my-project --ai bob-ide --no-git
+        bobkit init . --ai bob-ide         # Initialize in current directory
+        bobkit init .                     # Initialize in current directory (interactive AI selection)
+        bobkit init --here --ai bob-ide    # Alternative syntax for current directory
+        bobkit init --here
+        bobkit init --here --force  # Skip confirmation when current directory not empty
     """
     # Show banner first
     show_banner()
@@ -1029,7 +1029,7 @@ For more information, see: [cyan]https://github.com/openai/codex/issues/2890[/cy
 
 @app.command()
 def check():
-    """Check that all required tools are installed."""
+    """Check that all required tools are installed for BobKit."""
     show_banner()
     console.print("[bold]Checking for installed tools...[/bold]\n")
 
@@ -1046,7 +1046,7 @@ def check():
 
     console.print(tracker.render())
 
-    console.print("\n[bold green]Specify CLI is ready to use![/bold green]")
+    console.print("\n[bold green]BobKit CLI is ready to use![/bold green]")
 
     if not git_ok:
         console.print("[dim]Tip: Install git for repository management[/dim]")

@@ -1,10 +1,10 @@
 # AGENTS.md
 
-## About Spec Kit and Specify
+## About BobKit and Specify
 
-**GitHub Spec Kit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software.
+**GitHub BobKit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software.
 
-**Specify CLI** is the command-line interface that bootstraps projects with the Spec Kit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
+**Specify CLI** is the command-line interface that bootstraps projects with the BobKit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
 
 The toolkit supports multiple AI coding assistants, allowing teams to use their preferred tools while maintaining consistent project structure and development practices.
 
@@ -98,8 +98,8 @@ Modify `.github/workflows/scripts/create-github-release.sh` to include the new a
 
 ```bash
 gh release create "$VERSION" \
-  .genreleases/spec-kit-template-bob-ide-sh-"$VERSION".zip \
-  .genreleases/spec-kit-template-bob-ide-ps-"$VERSION".zip \
+  .genreleases/BobKit-template-bob-ide-sh-"$VERSION".zip \
+  .genreleases/BobKit-template-bob-ide-ps-"$VERSION".zip \
 ```
 
 #### 5. Update Agent Context Scripts
@@ -192,7 +192,7 @@ Different agents use different argument placeholders:
 ## Testing New Agent Integration
 
 1. **Build test**: Run package creation script locally
-2. **CLI test**: Test `specify init --ai <agent>` command
+2. **CLI test**: Test `bobkit init --ai <agent>` command
 3. **File generation**: Verify correct directory structure and files
 4. **Command validation**: Ensure generated commands work with the agent
 5. **Context update**: Test agent context update scripts
